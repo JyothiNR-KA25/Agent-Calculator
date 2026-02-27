@@ -1,5 +1,22 @@
 let display = document.getElementById('display');
 
+// Theme toggle with localStorage persistence
+function toggleTheme() {
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeToggle.textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('calculator-theme', isDark ? 'light' : 'dark');
+}
+
+// Apply saved theme on load
+(function applySavedTheme() {
+    const savedTheme = localStorage.getItem('calculator-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+})();
+
 function appendToDisplay(value) {
     if (display.value === '0' || display.value === 'Error') {
         display.value = value;
